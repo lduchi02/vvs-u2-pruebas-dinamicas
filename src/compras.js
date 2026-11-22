@@ -4,6 +4,12 @@ function validarNumero(nombre, valor) {
   }
 }
 
+// Redondeo a 2 decimales (half-up). Se suma Number.EPSILON para que valores
+// como 1.005, que en binario quedan en 1.00499..., suban a 1.01.
+function redondear2(valor) {
+  return Math.round((valor + Number.EPSILON) * 100) / 100;
+}
+
 function calcularTotal(precio, cantidad, descuento) {
   validarNumero('precio', precio);
   validarNumero('cantidad', cantidad);
@@ -21,6 +27,6 @@ function calcularTotal(precio, cantidad, descuento) {
 
   const subtotal = precio * cantidad;
   const valorDescuento = subtotal * descuento / 100;
-  return subtotal - valorDescuento;
+  return redondear2(subtotal - valorDescuento);
 }
 module.exports = { calcularTotal };
