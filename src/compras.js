@@ -9,6 +9,13 @@ function calcularTotal(precio, cantidad, descuento) {
   validarNumero('cantidad', cantidad);
   validarNumero('descuento', descuento);
 
+  if (precio < 0) {
+    throw new RangeError('precio no puede ser negativo');
+  }
+  if (cantidad <= 0) {
+    throw new RangeError('cantidad debe ser mayor que 0');
+  }
+
   const subtotal = precio * cantidad;
   const valorDescuento = subtotal * descuento / 100;
   return subtotal - valorDescuento;
