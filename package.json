@@ -1,0 +1,30 @@
+{
+  "name": "vvs-u2-pruebas-dinamicas",
+  "version": "1.0.0",
+  "description": "Laboratorio de pruebas dinámicas (VVS - Unidad 2): diseño de casos, automatización con Jest y gestión de defectos",
+  "main": "src/compras.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
+    "rendimiento": "node scripts/rendimiento.js"
+  },
+  "keywords": [],
+  "author": "Luis Duchi",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.5.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "lcov"
+    ]
+  }
+}
