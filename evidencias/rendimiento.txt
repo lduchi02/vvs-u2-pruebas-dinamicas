@@ -1,0 +1,37 @@
+# Comando: npm run rendimiento
+# Fecha: 2026-11-22 18:11:55 -05
+# Commit: 5b296b6 (main)
+# SO: Debian GNU/Linux 13 (trixie)
+
+
+> vvs-u2-pruebas-dinamicas@1.0.0 rendimiento
+> node scripts/rendimiento.js
+
+== Ambiente ==
+Node.js        : v24.22.1 (V8 13.6.233.17-node.58)
+Sistema        : Linux 6.12.113+ (linux/x64)
+CPU            : Intel(R) Xeon(R) Processor × 8
+Memoria total  : 15.6 GiB
+Parámetros     : N = 1.000.000 llamadas, 7 repeticiones, calentamiento 100.000
+
+== Resultados (tiempo por llamada) ==
+calcularTotal corregida (válidas)      mediana   42.17 ns/llamada | min 41.02 | max 44.26 | 23.7 M llamadas/s
+versión inicial, referencia (válidas)  mediana   41.91 ns/llamada | min 39.58 | max 43.01 | 23.9 M llamadas/s
+entrada inválida → RangeError (N/10)   mediana 2956.88 ns/llamada | min 2919.94 | max 3084.96 | 0.3 M llamadas/s
+
+== Detalle por repetición (ns/llamada) ==
+calcularTotal corregida (válidas)      42.17  44.26  41.82  43.11  41.55  42.51  41.02
+versión inicial, referencia (válidas)  39.58  42.13  42.11  41.91  41.71  43.01  41.32
+entrada inválida → RangeError (N/10)   3034.56  2922.18  2938.37  3084.96  2956.88  2919.94  2967.33
+
+Sobrecosto de validaciones + redondeo: 0.26 ns/llamada (1.0× la versión inicial)
+La diferencia queda dentro de la dispersión medida (3.43 ns): no es significativa.
+Lanzar y capturar un error cuesta ≈ 70× una llamada válida.
+
+== Limitaciones ==
+- Microbenchmark en una máquina virtual compartida: el ruido de otros procesos afecta min/max.
+- El compilador JIT de V8 puede optimizar el bucle; los valores son orientativos, no absolutos.
+- Un solo ambiente y una sola versión de Node; no se probó concurrencia ni memoria.
+- RNF-01 no define un umbral, por eso no hay veredicto pasa/falla, solo una línea base.
+
+[exit code: 0]

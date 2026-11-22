@@ -26,7 +26,7 @@ Técnicas: **PE** = partición de equivalencia, **VL** = valores límite, **DI**
 | CP-20 | RF-05 | DI precio `NaN` | (NaN, 2, 0) | `TypeError` | Alta | Falla | Pasa |
 | CP-21 | RF-05 | DI cantidad `Infinity` | (10, Infinity, 0) | `TypeError` | Media | Falla | Pasa |
 | CP-22 | RF-05 | DI descuento booleano | (10, 2, true) | `TypeError` | Baja | Falla | Pasa |
-| CP-23 | RNF-01 | EX rendimiento | 10⁶ llamadas válidas × 7 repeticiones | Registrar mediana (ns/llamada); sin umbral definido | Baja | — | Pendiente |
+| CP-23 | RNF-01 | EX rendimiento | 10⁶ llamadas válidas × 7 repeticiones | Registrar mediana (ns/llamada); sin umbral definido | Baja | — | Medido |
 
 ## Resumen por requisito
 
