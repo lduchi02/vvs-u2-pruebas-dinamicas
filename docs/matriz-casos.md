@@ -4,28 +4,28 @@ Técnicas: **PE** = partición de equivalencia, **VL** = valores límite, **DI**
 
 | ID | Req. | Técnica | Datos (precio, cantidad, descuento) | Resultado esperado | Prioridad | Estado inicial | Estado final |
 |----|------|---------|-------------------------------------|--------------------|-----------|----------------|--------------|
-| CP-01 | RF-01 | PE válida (enteros) | (10, 3, 0) | 30 | Alta | Pendiente | Pendiente |
-| CP-02 | RF-01 | PE válida (decimales) | (19.99, 3, 0) | 59.97 | Media | Pendiente | Pendiente |
-| CP-03 | RF-01 | VL cantidad mínima válida | (25, 1, 0) | 25 | Alta | Pendiente | Pendiente |
-| CP-04 | RF-04 | VL cantidad = 0 | (10, 0, 0) | `RangeError` | Alta | Pendiente | Pendiente |
-| CP-05 | RF-04 | PE inválida cantidad negativa | (10, −1, 0) | `RangeError` | Alta | Pendiente | Pendiente |
-| CP-06 | RF-01 | VL precio = 0 (supuesto S-01) | (0, 5, 0) | 0 | Media | Pendiente | Pendiente |
-| CP-07 | RF-04 | VL precio −0.01 | (−0.01, 1, 0) | `RangeError` | Alta | Pendiente | Pendiente |
-| CP-08 | RF-02 | VL descuento = 0 | (50, 2, 0) | 100 | Alta | Pendiente | Pendiente |
-| CP-09 | RF-02 | PE descuento intermedio | (100, 2, 15) | 170 | Alta | Pendiente | Pendiente |
-| CP-10 | RF-02, RF-03 | VL descuento = 100 | (45.5, 2, 100) | 0 | Alta | Pendiente | Pendiente |
-| CP-11 | RF-04 | VL descuento −0.01 | (100, 1, −0.01) | `RangeError` | Alta | Pendiente | Pendiente |
-| CP-12 | RF-04 | VL descuento 100.01 | (100, 1, 100.01) | `RangeError` | Alta | Pendiente | Pendiente |
-| CP-13 | RF-03 | PE error de coma flotante | (0.1, 3, 0) | 0.3 | Media | Pendiente | Pendiente |
-| CP-14 | RF-03 | PE redondeo con descuento | (19.99, 3, 15) | 50.97 | Alta | Pendiente | Pendiente |
-| CP-15 | RF-03 | VL medio centavo (supuesto S-02) | (12.345, 1, 0) | 12.35 | Media | Pendiente | Pendiente |
-| CP-16 | RF-02 | PE descuento con decimales | (80, 1, 12.5) | 70 | Baja | Pendiente | Pendiente |
-| CP-17 | RF-05 | DI precio string | ("10", 3, 0) | `TypeError` | Alta | Pendiente | Pendiente |
-| CP-18 | RF-05 | DI cantidad `null` | (10, null, 0) | `TypeError` | Media | Pendiente | Pendiente |
-| CP-19 | RF-05 | DI descuento `undefined` (omitido) | (10, 2) | `TypeError` | Media | Pendiente | Pendiente |
-| CP-20 | RF-05 | DI precio `NaN` | (NaN, 2, 0) | `TypeError` | Alta | Pendiente | Pendiente |
-| CP-21 | RF-05 | DI cantidad `Infinity` | (10, Infinity, 0) | `TypeError` | Media | Pendiente | Pendiente |
-| CP-22 | RF-05 | DI descuento booleano | (10, 2, true) | `TypeError` | Baja | Pendiente | Pendiente |
+| CP-01 | RF-01 | PE válida (enteros) | (10, 3, 0) | 30 | Alta | Pasa | Pendiente |
+| CP-02 | RF-01 | PE válida (decimales) | (19.99, 3, 0) | 59.97 | Media | Pasa | Pendiente |
+| CP-03 | RF-01 | VL cantidad mínima válida | (25, 1, 0) | 25 | Alta | Pasa | Pendiente |
+| CP-04 | RF-04 | VL cantidad = 0 | (10, 0, 0) | `RangeError` | Alta | Falla | Pendiente |
+| CP-05 | RF-04 | PE inválida cantidad negativa | (10, −1, 0) | `RangeError` | Alta | Falla | Pendiente |
+| CP-06 | RF-01 | VL precio = 0 (supuesto S-01) | (0, 5, 0) | 0 | Media | Pasa | Pendiente |
+| CP-07 | RF-04 | VL precio −0.01 | (−0.01, 1, 0) | `RangeError` | Alta | Falla | Pendiente |
+| CP-08 | RF-02 | VL descuento = 0 | (50, 2, 0) | 100 | Alta | Pasa | Pendiente |
+| CP-09 | RF-02 | PE descuento intermedio | (100, 2, 15) | 170 | Alta | Pasa | Pendiente |
+| CP-10 | RF-02, RF-03 | VL descuento = 100 | (45.5, 2, 100) | 0 | Alta | Pasa | Pendiente |
+| CP-11 | RF-04 | VL descuento −0.01 | (100, 1, −0.01) | `RangeError` | Alta | Falla | Pendiente |
+| CP-12 | RF-04 | VL descuento 100.01 | (100, 1, 100.01) | `RangeError` | Alta | Falla | Pendiente |
+| CP-13 | RF-03 | PE error de coma flotante | (0.1, 3, 0) | 0.3 | Media | Falla | Pendiente |
+| CP-14 | RF-03 | PE redondeo con descuento | (19.99, 3, 15) | 50.97 | Alta | Falla | Pendiente |
+| CP-15 | RF-03 | VL medio centavo (supuesto S-02) | (12.345, 1, 0) | 12.35 | Media | Falla | Pendiente |
+| CP-16 | RF-02 | PE descuento con decimales | (80, 1, 12.5) | 70 | Baja | Pasa | Pendiente |
+| CP-17 | RF-05 | DI precio string | ("10", 3, 0) | `TypeError` | Alta | Falla | Pendiente |
+| CP-18 | RF-05 | DI cantidad `null` | (10, null, 0) | `TypeError` | Media | Falla | Pendiente |
+| CP-19 | RF-05 | DI descuento `undefined` (omitido) | (10, 2) | `TypeError` | Media | Falla | Pendiente |
+| CP-20 | RF-05 | DI precio `NaN` | (NaN, 2, 0) | `TypeError` | Alta | Falla | Pendiente |
+| CP-21 | RF-05 | DI cantidad `Infinity` | (10, Infinity, 0) | `TypeError` | Media | Falla | Pendiente |
+| CP-22 | RF-05 | DI descuento booleano | (10, 2, true) | `TypeError` | Baja | Falla | Pendiente |
 | CP-23 | RNF-01 | EX rendimiento | 10⁶ llamadas válidas × 7 repeticiones | Registrar mediana (ns/llamada); sin umbral definido | Baja | — | Pendiente |
 
 ## Resumen por requisito

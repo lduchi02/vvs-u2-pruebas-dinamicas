@@ -1,0 +1,24 @@
+# Comando: node scripts/salidas-reales.js
+# Fecha: 2026-11-22 18:08:39 -05
+# Commit: 2fd949a (main)
+# Node v24.22.1 · Jest 30.5.2
+
+CP-04  calcularTotal(10, 0, 0) => 0
+CP-05  calcularTotal(10, -1, 0) => -10
+CP-07  calcularTotal(-0.01, 1, 0) => -0.01
+CP-11  calcularTotal(100, 1, -0.01) => 100.01
+CP-12  calcularTotal(100, 1, 100.01) => -0.010000000000005116
+CP-13  calcularTotal(0.1, 3, 0) => 0.30000000000000004
+CP-14  calcularTotal(19.99, 3, 15) => 50.9745
+CP-15  calcularTotal(12.345, 1, 0) => 12.345
+CP-17  calcularTotal("10", 3, 0) => 30
+CP-18  calcularTotal(10, null, 0) => 0
+CP-19  calcularTotal(10, 2) => NaN
+CP-20  calcularTotal(NaN, 2, 0) => NaN
+CP-21  calcularTotal(10, Infinity, 0) => NaN
+CP-22  calcularTotal(10, 2, true) => 19.8
+extra  calcularTotal(100, 1, 150) => -50
+extra  calcularTotal(100, 1, -20) => 120
+extra  calcularTotal(-50, 2, 0) => -100
+
+[exit code: 0]
