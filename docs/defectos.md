@@ -8,11 +8,11 @@ Severidad: **Alta** = cobro incorrecto o dato corrupto que llega a la factura; *
 
 | ID | Título | Req. | Severidad | Prioridad | Casos que lo detectan | Estado |
 |----|--------|------|-----------|-----------|------------------------|--------|
-| DEF-01 | Descuento fuera de 0–100 % se acepta | RF-02, RF-04 | Alta | Alta | CP-11, CP-12 | Abierto |
-| DEF-02 | Precio negativo y cantidad ≤ 0 se aceptan | RF-04 | Alta | Alta | CP-04, CP-05, CP-07 | Abierto |
-| DEF-03 | El total no se redondea a dos decimales | RF-03 | Media | Media | CP-13, CP-14, CP-15 | Abierto |
-| DEF-04 | Coerción de tipos: string, `null` y booleano se aceptan como números | RF-05 | Alta | Alta | CP-17, CP-18, CP-22 | Abierto |
-| DEF-05 | `NaN`, `Infinity` y `undefined` producen un total no finito sin error | RF-05 | Media | Alta | CP-19, CP-20, CP-21 | Abierto |
+| DEF-01 | Descuento fuera de 0–100 % se acepta | RF-02, RF-04 | Alta | Alta | CP-11, CP-12 | Cerrado |
+| DEF-02 | Precio negativo y cantidad ≤ 0 se aceptan | RF-04 | Alta | Alta | CP-04, CP-05, CP-07 | Cerrado |
+| DEF-03 | El total no se redondea a dos decimales | RF-03 | Media | Media | CP-13, CP-14, CP-15 | Cerrado |
+| DEF-04 | Coerción de tipos: string, `null` y booleano se aceptan como números | RF-05 | Alta | Alta | CP-17, CP-18, CP-22 | Cerrado |
+| DEF-05 | `NaN`, `Infinity` y `undefined` producen un total no finito sin error | RF-05 | Media | Alta | CP-19, CP-20, CP-21 | Cerrado |
 
 ---
 
@@ -100,3 +100,23 @@ Severidad: **Alta** = cobro incorrecto o dato corrupto que llega a la factura; *
 ## Orden de corrección
 
 Primero los tipos (DEF-04, DEF-05), porque las validaciones de rango solo tienen sentido sobre números finitos (supuesto S-04). Después los rangos (DEF-02, DEF-01) y al final el redondeo (DEF-03). Después de cada corrección se ejecuta la suite completa (regresión) y se guarda la salida en `evidencias/intermedias/`.
+
+## Corrección y verificación
+
+Cada corrección se hizo en la rama `fix/defectos`, con un commit por defecto y la suite completa ejecutada después de cada cambio. No se modificó ningún requisito ni ninguna prueba.
+
+| Paso | Defecto | Commit | Cambio en `src/compras.js` | Resultado de la suite | Evidencia |
+|------|---------|--------|----------------------------|-----------------------|-----------|
+| 0 | — | `6b2c312` | Código inicial | 14 fallidas · 8 aprobadas | `evidencias/pruebas-iniciales.txt` |
+| 1 | DEF-04 | `7a31987` | `validarNumero`: `typeof valor !== 'number'` → `TypeError` | 10 fallidas · 12 aprobadas | `evidencias/intermedias/tras-DEF-04.txt` |
+| 2 | DEF-05 | `40b0986` | Se añade `!Number.isFinite(valor)` a la misma validación | 8 fallidas · 14 aprobadas | `evidencias/intermedias/tras-DEF-05.txt` |
+| 3 | DEF-02 | `13a5eeb` | `precio < 0` y `cantidad <= 0` → `RangeError` | 5 fallidas · 17 aprobadas | `evidencias/intermedias/tras-DEF-02.txt` |
+| 4 | DEF-01 | `f225400` | `descuento < 0 \|\| descuento > 100` → `RangeError` | 3 fallidas · 19 aprobadas | `evidencias/intermedias/tras-DEF-01.txt` |
+| 5 | DEF-03 | `134c102` | `redondear2`: `Math.round((x + Number.EPSILON) * 100) / 100` | **0 fallidas · 22 aprobadas** | `evidencias/pruebas-finales.txt` |
+
+Observaciones:
+
+- La corrección de DEF-04 también hizo pasar CP-19 (`undefined`), porque `typeof undefined` no es `'number'`; DEF-05 quedó reducido a `NaN` e `Infinity`, que sí son de tipo `number`.
+- En DEF-03 se usó `Number.EPSILON` porque `Math.round(1.005 * 100) / 100` devuelve `1` (en binario 1.005 es 1.00499…), mientras que con `EPSILON` devuelve `1.01`, coherente con el supuesto S-02 (half-up).
+- Los mensajes de error indican el parámetro inválido (`precio`, `cantidad` o `descuento`), lo que facilita el diagnóstico (`evidencias/salidas-reales-finales.txt`).
+- Cobertura final de `src/compras.js`: 100 % de sentencias, ramas, funciones y líneas (`evidencias/cobertura.txt`).

@@ -1,0 +1,186 @@
+# Comando: npm test
+# Fecha: 2026-11-22 18:09:53 -05
+# Commit: 7a31987 (fix/defectos)
+# Node v24.22.1 · Jest 30.5.2
+
+
+> vvs-u2-pruebas-dinamicas@1.0.0 test
+> jest --runInBand
+
+FAIL tests/compras.test.js
+  RF-01 · Subtotal = precio × cantidad
+    ✓ CP-01 [PE] enteros válidos (10, 3, 0) → 30 (2 ms)
+    ✓ CP-02 [PE] precio con decimales (19.99, 3, 0) → 59.97
+    ✓ CP-03 [VL] cantidad mínima válida (25, 1, 0) → 25 (1 ms)
+    ✓ CP-06 [VL] precio 0 permitido por supuesto S-01 (0, 5, 0) → 0
+  RF-02 · Descuento de 0 a 100 %
+    ✓ CP-08 [VL] descuento 0 (50, 2, 0) → 100 (1 ms)
+    ✓ CP-09 [PE] descuento intermedio (100, 2, 15) → 170
+    ✓ CP-16 [PE] descuento con decimales (80, 1, 12.5) → 70 (1 ms)
+  RF-03 · Total con dos decimales
+    ✓ CP-10 [VL] descuento 100 produce 0 (45.5, 2, 100) → 0
+    ✕ CP-13 [PE] error de coma flotante (0.1, 3, 0) → 0.3 (2 ms)
+    ✕ CP-14 [PE] redondeo con descuento (19.99, 3, 15) → 50.97 (2 ms)
+    ✕ CP-15 [VL] medio centavo, redondeo half-up S-02 (12.345, 1, 0) → 12.35 (1 ms)
+  RF-04 · RangeError para valores fuera de rango
+    ✕ CP-04 [VL] cantidad 0 → RangeError (2 ms)
+    ✕ CP-05 [PE] cantidad negativa (10, -1, 0) → RangeError (1 ms)
+    ✕ CP-07 [VL] precio -0.01 → RangeError
+    ✕ CP-11 [VL] descuento -0.01 → RangeError (1 ms)
+    ✕ CP-12 [VL] descuento 100.01 → RangeError (1 ms)
+  RF-05 · TypeError para entradas no numéricas o no finitas
+    ✓ CP-17 [DI] precio string ("10", 3, 0) → TypeError (4 ms)
+    ✓ CP-18 [DI] cantidad null (10, null, 0) → TypeError (9 ms)
+    ✓ CP-19 [DI] descuento omitido / undefined (10, 2) → TypeError
+    ✓ CP-20 [DI] precio NaN → TypeError (1 ms)
+    ✓ CP-21 [DI] cantidad Infinity → TypeError (1 ms)
+    ✓ CP-22 [DI] descuento booleano (10, 2, true) → TypeError
+
+  ● RF-03 · Total con dos decimales › CP-13 [PE] error de coma flotante (0.1, 3, 0) → 0.3
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0.3
+    Received: 0.30000000000000004
+
+      41 |
+      42 |   test('CP-13 [PE] error de coma flotante (0.1, 3, 0) → 0.3', () => {
+    > 43 |     expect(calcularTotal(0.1, 3, 0)).toBe(0.3);
+         |                                      ^
+      44 |   });
+      45 |
+      46 |   test('CP-14 [PE] redondeo con descuento (19.99, 3, 15) → 50.97', () => {
+
+      at Object.toBe (tests/compras.test.js:43:38)
+
+  ● RF-03 · Total con dos decimales › CP-14 [PE] redondeo con descuento (19.99, 3, 15) → 50.97
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 50.97
+    Received: 50.9745
+
+      45 |
+      46 |   test('CP-14 [PE] redondeo con descuento (19.99, 3, 15) → 50.97', () => {
+    > 47 |     expect(calcularTotal(19.99, 3, 15)).toBe(50.97);
+         |                                         ^
+      48 |   });
+      49 |
+      50 |   test('CP-15 [VL] medio centavo, redondeo half-up S-02 (12.345, 1, 0) → 12.35', () => {
+
+      at Object.toBe (tests/compras.test.js:47:41)
+
+  ● RF-03 · Total con dos decimales › CP-15 [VL] medio centavo, redondeo half-up S-02 (12.345, 1, 0) → 12.35
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 12.35
+    Received: 12.345
+
+      49 |
+      50 |   test('CP-15 [VL] medio centavo, redondeo half-up S-02 (12.345, 1, 0) → 12.35', () => {
+    > 51 |     expect(calcularTotal(12.345, 1, 0)).toBe(12.35);
+         |                                         ^
+      52 |   });
+      53 | });
+      54 |
+
+      at Object.toBe (tests/compras.test.js:51:41)
+
+  ● RF-04 · RangeError para valores fuera de rango › CP-04 [VL] cantidad 0 → RangeError
+
+    expect(received).toThrow(expected)
+
+    Expected constructor: RangeError
+
+    Received function did not throw
+
+      55 | describe('RF-04 · RangeError para valores fuera de rango', () => {
+      56 |   test('CP-04 [VL] cantidad 0 → RangeError', () => {
+    > 57 |     expect(() => calcularTotal(10, 0, 0)).toThrow(RangeError);
+         |                                           ^
+      58 |   });
+      59 |
+      60 |   test('CP-05 [PE] cantidad negativa (10, -1, 0) → RangeError', () => {
+
+      at Object.toThrow (tests/compras.test.js:57:43)
+
+  ● RF-04 · RangeError para valores fuera de rango › CP-05 [PE] cantidad negativa (10, -1, 0) → RangeError
+
+    expect(received).toThrow(expected)
+
+    Expected constructor: RangeError
+
+    Received function did not throw
+
+      59 |
+      60 |   test('CP-05 [PE] cantidad negativa (10, -1, 0) → RangeError', () => {
+    > 61 |     expect(() => calcularTotal(10, -1, 0)).toThrow(RangeError);
+         |                                            ^
+      62 |   });
+      63 |
+      64 |   test('CP-07 [VL] precio -0.01 → RangeError', () => {
+
+      at Object.toThrow (tests/compras.test.js:61:44)
+
+  ● RF-04 · RangeError para valores fuera de rango › CP-07 [VL] precio -0.01 → RangeError
+
+    expect(received).toThrow(expected)
+
+    Expected constructor: RangeError
+
+    Received function did not throw
+
+      63 |
+      64 |   test('CP-07 [VL] precio -0.01 → RangeError', () => {
+    > 65 |     expect(() => calcularTotal(-0.01, 1, 0)).toThrow(RangeError);
+         |                                              ^
+      66 |   });
+      67 |
+      68 |   test('CP-11 [VL] descuento -0.01 → RangeError', () => {
+
+      at Object.toThrow (tests/compras.test.js:65:46)
+
+  ● RF-04 · RangeError para valores fuera de rango › CP-11 [VL] descuento -0.01 → RangeError
+
+    expect(received).toThrow(expected)
+
+    Expected constructor: RangeError
+
+    Received function did not throw
+
+      67 |
+      68 |   test('CP-11 [VL] descuento -0.01 → RangeError', () => {
+    > 69 |     expect(() => calcularTotal(100, 1, -0.01)).toThrow(RangeError);
+         |                                                ^
+      70 |   });
+      71 |
+      72 |   test('CP-12 [VL] descuento 100.01 → RangeError', () => {
+
+      at Object.toThrow (tests/compras.test.js:69:48)
+
+  ● RF-04 · RangeError para valores fuera de rango › CP-12 [VL] descuento 100.01 → RangeError
+
+    expect(received).toThrow(expected)
+
+    Expected constructor: RangeError
+
+    Received function did not throw
+
+      71 |
+      72 |   test('CP-12 [VL] descuento 100.01 → RangeError', () => {
+    > 73 |     expect(() => calcularTotal(100, 1, 100.01)).toThrow(RangeError);
+         |                                                 ^
+      74 |   });
+      75 | });
+      76 |
+
+      at Object.toThrow (tests/compras.test.js:73:49)
+
+Test Suites: 1 failed, 1 total
+Tests:       8 failed, 14 passed, 22 total
+Snapshots:   0 total
+Time:        0.321 s, estimated 1 s
+Ran all test suites.
+
+[exit code: 1]
