@@ -1,6 +1,6 @@
 function validarNumero(nombre, valor) {
-  if (typeof valor !== 'number') {
-    throw new TypeError(`${nombre} debe ser un número`);
+  if (typeof valor !== 'number' || !Number.isFinite(valor)) {
+    throw new TypeError(`${nombre} debe ser un número finito`);
   }
 }
 
